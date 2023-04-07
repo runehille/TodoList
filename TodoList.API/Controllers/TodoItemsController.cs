@@ -88,7 +88,7 @@ public class TodoItemsController : Controller
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("Edit/{id}")]
-    [ValidateAntiForgeryToken]
+    //[ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Description,CreatedTimestamp,LastModifiedTimestamp,LastModifiedBy")] TodoItemModel todoItemModel)
     {
         if (id != todoItemModel.Id)
