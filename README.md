@@ -6,4 +6,11 @@ This is a work in progress..
 
 The API connects to an Azure Sql Database.
 
-The client will be Blazor WASM.
+The client is Blazor WASM.
+
+
+Next:
+
+Unit tests (Xunit)
+Repository pattern (Decouple controller from data access-logic)
+DTOs
