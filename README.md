@@ -2,11 +2,11 @@
 
 This is a work in progress..
 
-.NET Web API hosted on Azure Web Apps, using continuous deployment from GitHub.
+.NET Web API hosted on Azure App Service, using continuous deployment from GitHub.
 
 The API connects to an Azure Sql Database.
 
-The client is Blazor WASM.
+The client is Blazor WASM, hosted as an Azure Static Web App.
 
 
 
