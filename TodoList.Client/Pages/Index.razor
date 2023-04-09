@@ -1,9 +1,41 @@
 ﻿@page "/"
+@using TodoList.Client.Models;
+@inject HttpClient Http
 
-<PageTitle>Index</PageTitle>
+<PageTitle>TodoList</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Todo List</h1>
 
-Welcome to your new app.
+@if (todoitems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TodoItem item in todoitems)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private List<TodoItem>? todoitems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todoitems = await Http.GetFromJsonAsync<List<TodoItem>>("https://todolistapi20230406231150.azurewebsites.net/TodoItems");
+    }
+}
