@@ -5,7 +5,12 @@ on:
     branches:
       - master
     paths-ignore:
+      - '**/.github/workflows'
+      - '**/TodoList.API'
+      - '**/.gitattributes'
+      - '**/.gitignore'
       - '**/README.md'
+      - '**/TodoList.sln'
     
   pull_request:
     types: [opened, synchronize, reopened, closed]
