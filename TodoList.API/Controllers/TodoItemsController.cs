@@ -10,17 +10,19 @@ namespace TodoList.API.Controllers;
 public class TodoItemsController : Controller
 {
     private readonly SqlDbContext _context;
+    private readonly ITodoItemsRepository _todoItemsRepository;
 
-    public TodoItemsController(SqlDbContext context)
+    public TodoItemsController(SqlDbContext context, ITodoItemsRepository todoItemsRepository)
     {
         _context = context;
+        _todoItemsRepository = todoItemsRepository;
     }
 
     // GET: TodoItems
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var result = await _context.TodoItems.ToListAsync();
+        var result = await _todoItemsRepository.GetAllTodoItemsAsync();
 
         return Ok(result);
     }
@@ -29,19 +31,19 @@ public class TodoItemsController : Controller
     [HttpGet("Details/{id}")]
     public async Task<IActionResult> Details(Guid? id)
     {
-        if (id == null || _context.TodoItems == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var todoItemModel = await _context.TodoItems
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (todoItemModel == null)
+        var todoItem = await _todoItemsRepository.GetTodoItemByIdAsync(id);
+
+        if (todoItem == null)
         {
             return NotFound();
         }
 
-        return Ok(todoItemModel);
+        return Ok(todoItem);
     }
 
     // GET: TodoItems/Create

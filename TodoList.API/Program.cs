@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer("name=ConnectionStrings"));
+builder.Services.AddScoped<ITodoItemsRepository, TodoItemsRepository>();
 
 builder.Services.AddCors(options =>
 {
