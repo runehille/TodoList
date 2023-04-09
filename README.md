@@ -6,7 +6,7 @@ This is a work in progress..
 
 The API connects to an Azure Sql Database.
 
-The client is Blazor WASM, hosted as an Azure Static Web App.
+The client is Blazor WASM, hosted as an Azure Static Web App. The current URL is runehille.com
 
 
 
