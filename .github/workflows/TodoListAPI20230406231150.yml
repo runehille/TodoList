@@ -4,7 +4,12 @@ on:
     branches:
     - master
     paths-ignore:
-    - '**/README.md'
+      - '**/.github/workflows'
+      - '**/TodoList.Client'
+      - '**/.gitattributes'
+      - '**/.gitignore'
+      - '**/README.md'
+      - '**/TodoList.sln'
 
 env:
   AZURE_WEBAPP_NAME: TodoListAPI20230406231150
