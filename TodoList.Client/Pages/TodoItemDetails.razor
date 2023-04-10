@@ -1,0 +1,47 @@
+﻿@page "/Details/{Id:guid}"
+@using TodoList.Client.Models;
+@using System.Net;
+@inject HttpClient Http
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+@if (todoitem == null)
+{
+    <p><em>Loading...</em></p>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>@todoitem.Title</td>
+                    <td>@todoitem.Description</td>
+                </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+    private TodoItem? todoitem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync($"https://todolistapi20230406231150.azurewebsites.net/TodoItems/Details/{Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            todoitem = await response.Content.ReadFromJsonAsync<TodoItem>();
+        }
+    }
+}

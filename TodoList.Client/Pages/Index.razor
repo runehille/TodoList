@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using TodoList.Client.Models;
 @inject HttpClient Http
+@inject NavigationManager navManager
 
 <PageTitle>TodoList</PageTitle>
 
@@ -22,7 +23,7 @@ else
         <tbody>
             @foreach (TodoItem item in todoitems)
             {
-                <tr>
+                <tr @onclick="() => GoToDetails(item.Id)" style="cursor: pointer;">
                     <td>@item.Title</td>
                     <td>@item.Description</td>
                 </tr>
@@ -34,8 +35,14 @@ else
 @code {
     private List<TodoItem>? todoitems;
 
+
     protected override async Task OnInitializedAsync()
     {
         todoitems = await Http.GetFromJsonAsync<List<TodoItem>>("https://todolistapi20230406231150.azurewebsites.net/TodoItems");
+    }
+
+    public void GoToDetails(Guid? id)
+    {
+        navManager.NavigateTo($"/Details/{id}");
     }
 }
