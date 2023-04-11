@@ -44,7 +44,7 @@
             LastModifiedBy = DateTime.UtcNow
         };
 
-        var result = await Http.PostAsJsonAsync($"https://localhost:7117/TodoItems/Create", todoitem);
+        var result = await Http.PostAsJsonAsync($"https://todolistapi20230406231150.azurewebsites.net/TodoItems/Create", todoitem);
 
         if (result.IsSuccessStatusCode)
         {
