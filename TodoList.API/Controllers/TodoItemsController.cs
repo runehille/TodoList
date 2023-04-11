@@ -59,7 +59,7 @@ public class TodoItemsController : Controller
             _context.Add(todoItemModel);
             await _context.SaveChangesAsync();
         }
-        return Ok();
+        return Ok(todoItemModel);
     }
 
     // GET: TodoItems/Edit/5
