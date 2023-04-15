@@ -5,8 +5,8 @@ on:
     branches:
       - master
     paths-ignore:
-      - '**/.github/workflows'
-      - '**/TodoList.API'
+      - '**/.github/workflows/**'
+      - '**/TodoList.API/**'
       - '**/.gitattributes'
       - '**/.gitignore'
       - '**/README.md'
