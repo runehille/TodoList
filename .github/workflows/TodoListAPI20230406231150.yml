@@ -4,8 +4,8 @@ on:
     branches:
     - master
     paths-ignore:
-      - '**/.github/workflows'
-      - '**/TodoList.Client'
+      - '**/.github/workflows/**'
+      - '**/TodoList.Client/**'
       - '**/.gitattributes'
       - '**/.gitignore'
       - '**/README.md'
