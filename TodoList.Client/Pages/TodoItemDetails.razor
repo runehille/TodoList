@@ -2,6 +2,7 @@
 @using TodoList.Client.Models;
 @using System.Net;
 @inject HttpClient Http
+@inject NavigationManager navManager
 
 <PageTitle>Details</PageTitle>
 
@@ -28,6 +29,7 @@ else
                 </tr>
         </tbody>
     </table>
+    <button class="btn btn-danger" @onclick="DeleteTodoItem">Delete</button>
 }
 
 @code {
@@ -42,6 +44,25 @@ else
         if (response.IsSuccessStatusCode)
         {
             todoitem = await response.Content.ReadFromJsonAsync<TodoItem>();
+        }
+    }
+
+    private async void DeleteTodoItem()
+    {
+        TodoItem? todoItemToDelete;
+
+        var response = await Http.GetAsync($"https://todolistapi20230406231150.azurewebsites.net/TodoItems/Delete/{Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            todoItemToDelete = await response.Content.ReadFromJsonAsync<TodoItem>();
+
+            if (todoItemToDelete != null && todoItemToDelete.Id == Id)
+            {
+                await Http.PostAsJsonAsync($"https://todolistapi20230406231150.azurewebsites.net/TodoItems/Delete/{Id}", Id);
+
+                navManager.NavigateTo("/");
+            }
         }
     }
 }
