@@ -32,4 +32,15 @@ public class TodoItemsRepository : ITodoItemsRepository
 
         return todoItemModel;
     }
+
+    public async Task DeleteTodoItemAsync(Guid? id)
+    {
+        var todoItemModel = await _dbContext.TodoItems.FindAsync(id);
+        if (todoItemModel != null)
+        {
+            _dbContext.TodoItems.Remove(todoItemModel);
+        }
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

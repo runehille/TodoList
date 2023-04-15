@@ -7,5 +7,6 @@ namespace TodoList.API.DataAccess
         Task<List<TodoItemModel>> GetAllTodoItemsAsync();
         Task<TodoItemModel> GetTodoItemByIdAsync(Guid? id);
         Task<TodoItemModel> CreateNewTodoItemAsync(TodoItemModel item);
+        Task DeleteTodoItemAsync(Guid? id);
     }
 }

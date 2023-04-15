@@ -122,8 +122,8 @@ public class TodoItemsController : Controller
             return NotFound();
         }
 
-        var todoItemModel = await _context.TodoItems
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var todoItemModel = await _todoItemsRepository.GetTodoItemByIdAsync(id);
+
         if (todoItemModel == null)
         {
             return NotFound();
@@ -137,17 +137,8 @@ public class TodoItemsController : Controller
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
-        if (_context.TodoItems == null)
-        {
-            return Problem("Entity set 'SqlDbContext.TodoItems'  is null.");
-        }
-        var todoItemModel = await _context.TodoItems.FindAsync(id);
-        if (todoItemModel != null)
-        {
-            _context.TodoItems.Remove(todoItemModel);
-        }
+        await _todoItemsRepository.DeleteTodoItemAsync(id);
 
-        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
