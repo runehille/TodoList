@@ -56,8 +56,7 @@ public class TodoItemsController : Controller
         if (ModelState.IsValid)
         {
             todoItemModel.Id = Guid.NewGuid();
-            _context.Add(todoItemModel);
-            await _context.SaveChangesAsync();
+            await _todoItemsRepository.CreateNewTodoItemAsync(todoItemModel);
         }
         return Ok(todoItemModel);
     }

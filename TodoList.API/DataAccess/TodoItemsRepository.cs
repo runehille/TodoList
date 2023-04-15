@@ -25,4 +25,11 @@ public class TodoItemsRepository : ITodoItemsRepository
 
         return todoItemModel;
     }
+    public async Task<TodoItemModel> CreateNewTodoItemAsync(TodoItemModel todoItemModel)
+    {
+        _dbContext.Add(todoItemModel);
+        await _dbContext.SaveChangesAsync();
+
+        return todoItemModel;
+    }
 }
