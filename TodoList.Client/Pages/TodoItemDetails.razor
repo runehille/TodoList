@@ -23,12 +23,13 @@ else
             </tr>
         </thead>
         <tbody>
-                <tr>
-                    <td>@todoitem.Title</td>
-                    <td>@todoitem.Description</td>
-                </tr>
+            <tr>
+                <td>@todoitem.Title</td>
+                <td>@todoitem.Description</td>
+            </tr>
         </tbody>
     </table>
+    <button class="btn btn-primary" @onclick="EditTodoItem">Edit</button>
     <button class="btn btn-danger" @onclick="DeleteTodoItem">Delete</button>
 }
 
@@ -64,5 +65,10 @@ else
                 navManager.NavigateTo("/");
             }
         }
+    }
+
+    private void EditTodoItem()
+    {
+        navManager.NavigateTo($"/Edit/{Id}");
     }
 }
