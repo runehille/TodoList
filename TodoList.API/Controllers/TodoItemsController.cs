@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TodoList.API.DataAccess;
 using TodoList.API.DataModels;
 
@@ -9,12 +8,10 @@ namespace TodoList.API.Controllers;
 [Route("[controller]")]
 public class TodoItemsController : Controller
 {
-    private readonly SqlDbContext _context;
     private readonly ITodoItemsRepository _todoItemsRepository;
 
-    public TodoItemsController(SqlDbContext context, ITodoItemsRepository todoItemsRepository)
+    public TodoItemsController(ITodoItemsRepository todoItemsRepository)
     {
-        _context = context;
         _todoItemsRepository = todoItemsRepository;
     }
 
@@ -47,8 +44,6 @@ public class TodoItemsController : Controller
     }
 
     // POST: TodoItems/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("Create")]
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedTimestamp,LastModifiedTimestamp,LastModifiedBy")] TodoItemModel todoItemModel)
@@ -79,8 +74,6 @@ public class TodoItemsController : Controller
     }
 
     // POST: TodoItems/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost("Edit/{id}")]
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Description,CreatedTimestamp,LastModifiedTimestamp,LastModifiedBy")] TodoItemModel todoItemModel)
@@ -129,6 +122,4 @@ public class TodoItemsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-
 }
