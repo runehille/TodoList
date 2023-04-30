@@ -32,6 +32,26 @@ public class TodoItemsRepository : ITodoItemsRepository
 
         return todoItemModel;
     }
+    public async Task<TodoItemModel> EditTodoItemAsync(TodoItemModel todoItemModel)
+    {
+        try
+        {
+            _dbContext.Update(todoItemModel);
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!TodoItemModelExists(todoItemModel.Id))
+            {
+                return null!;
+            }
+            else
+            {
+                throw;
+            }
+        }
+        return todoItemModel;
+    }
 
     public async Task DeleteTodoItemAsync(Guid? id)
     {
@@ -42,5 +62,9 @@ public class TodoItemsRepository : ITodoItemsRepository
         }
 
         await _dbContext.SaveChangesAsync();
+    }
+    private bool TodoItemModelExists(Guid id)
+    {
+        return (_dbContext.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }

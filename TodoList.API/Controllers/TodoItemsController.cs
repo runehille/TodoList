@@ -65,12 +65,12 @@ public class TodoItemsController : Controller
     [HttpGet("Edit/{id}")]
     public async Task<IActionResult> Edit(Guid? id)
     {
-        if (id == null || _context.TodoItems == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var todoItemModel = await _context.TodoItems.FindAsync(id);
+        var todoItemModel = await _todoItemsRepository.GetTodoItemByIdAsync(id);
         if (todoItemModel == null)
         {
             return NotFound();
@@ -92,32 +92,20 @@ public class TodoItemsController : Controller
 
         if (ModelState.IsValid)
         {
-            try
-            {
-                _context.Update(todoItemModel);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TodoItemModelExists(todoItemModel.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _todoItemsRepository.EditTodoItemAsync(todoItemModel);
             return RedirectToAction(nameof(Index));
         }
-        return Ok(todoItemModel);
+        else
+        {
+            return NotFound();
+        }
     }
 
     // GET: TodoItems/Delete/5
     [HttpGet("Delete/{id}")]
     public async Task<IActionResult> Delete(Guid? id)
     {
-        if (id == null || _context.TodoItems == null)
+        if (id == null)
         {
             return NotFound();
         }
@@ -142,8 +130,5 @@ public class TodoItemsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool TodoItemModelExists(Guid id)
-    {
-        return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
-    }
+
 }
