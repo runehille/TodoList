@@ -18,6 +18,7 @@ else
             <tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Created</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@ else
                 <tr @onclick="() => GoToDetails(item.Id)" style="cursor: pointer;">
                     <td>@item.Title</td>
                     <td>@item.Description</td>
+                    <td>@item.CreatedTimestamp</td>
                 </tr>
             }
         </tbody>
