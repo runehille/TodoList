@@ -85,6 +85,7 @@ public class TodoItemsController : Controller
 
         if (ModelState.IsValid)
         {
+            todoItemModel.LastModifiedTimestamp = DateTime.UtcNow;
             await _todoItemsRepository.EditTodoItemAsync(todoItemModel);
             return RedirectToAction(nameof(Index));
         }
