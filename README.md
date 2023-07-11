@@ -14,9 +14,6 @@ Using continuous deployment from GitHub.
 ## Up next:
 
 ### API:
-Unit tests (Xunit)
-
-Repository pattern (Decouple controller from DbContext)
 
 DTOs
 
@@ -24,6 +21,5 @@ Bearer token authentication
 
 
 ### Frontend:
-Implement all CRUD endpoints
 
 Login
