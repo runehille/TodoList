@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TodoList.API.DataAccess;
+using TodoList.API.DataAccess.Context;
 
 #nullable disable
 
 namespace TodoList.API.Migrations
 {
-    [DbContext(typeof(SqlDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20230407110040_InitialCreate")]
     partial class InitialCreate
     {

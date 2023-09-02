@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TodoList.API.Controllers;
-using TodoList.API.DataAccess;
-using TodoList.API.DataModels;
+using TodoList.API.Models;
+using TodoList.API.Repositories.Interfaces;
 
 namespace TodoList.API.Tests
 {
@@ -15,7 +15,7 @@ namespace TodoList.API.Tests
             var mockRepo = new Mock<ITodoItemsRepository>();
             mockRepo.Setup(repo => repo.GetAllTodoItemsAsync())
                 .ReturnsAsync(
-                    new List<TodoItemModel>()
+                    new List<TodoItem>()
                 );
             var controller = new TodoItemsController(mockRepo.Object);
             // Act
@@ -41,11 +41,11 @@ namespace TodoList.API.Tests
         {
             // Arrange
             var mockRepo = new Mock<ITodoItemsRepository>();
-            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<Guid?>()))
+            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<string?>()))
                 .ReturnsAsync(() => null!);
             var controller = new TodoItemsController(mockRepo.Object);
             // Act
-            var result = await controller.Details(Guid.NewGuid());
+            var result = await controller.Details(Guid.NewGuid().ToString());
             // Assert
             Assert.IsType<NotFoundResult>(result);
         }
@@ -54,21 +54,20 @@ namespace TodoList.API.Tests
         {
             // Arrange
             var mockRepo = new Mock<ITodoItemsRepository>();
-            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<Guid>()))
+            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(
-                                   new TodoItemModel()
+                                   new TodoItem()
                                    {
-                                       Id = Guid.NewGuid(),
+                                       Id = Guid.NewGuid().ToString(),
                                        Title = "Test Title",
                                        Description = "Test Description",
                                        CreatedTimestamp = DateTime.Now,
                                        LastModifiedTimestamp = DateTime.Now,
-                                       LastModifiedBy = DateTime.Now
                                    }
                                                   );
             var controller = new TodoItemsController(mockRepo.Object);
             // Act
-            var result = await controller.Details(Guid.NewGuid());
+            var result = await controller.Details(Guid.NewGuid().ToString());
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
@@ -80,14 +79,13 @@ namespace TodoList.API.Tests
             var controller = new TodoItemsController(mockRepo.Object);
             // Act
             var result = await controller.Create(
-                               new TodoItemModel()
+                               new TodoItem()
                                {
-                                   Id = Guid.NewGuid(),
+                                   Id = Guid.NewGuid().ToString(),
                                    Title = "Test Title",
                                    Description = "Test Description",
                                    CreatedTimestamp = DateTime.Now,
                                    LastModifiedTimestamp = DateTime.Now,
-                                   LastModifiedBy = DateTime.Now
                                }
                                           );
             // Assert

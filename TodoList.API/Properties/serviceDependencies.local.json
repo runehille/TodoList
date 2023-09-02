@@ -3,11 +3,12 @@
     "secrets1": {
       "type": "secrets.user"
     },
-    "mssql1": {
+    "cosmosdb1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/westus/connectors/ConnectionStringsConnectionStrings_9A2AA21074",
       "secretStore": "LocalSecretsFile",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/rhillesqlserver/databases/rhillesqldatabase",
-      "type": "mssql.azure",
-      "connectionId": "ConnectionStrings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.DocumentDB/databaseAccounts/rhillecosmosdb",
+      "type": "cosmosdb.azure",
+      "connectionId": "ConnectionStrings:ConnectionStrings",
       "dynamicId": null
     }
   }

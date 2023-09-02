@@ -3,8 +3,8 @@
     "secrets1": {
       "type": "secrets"
     },
-    "mssql1": {
-      "type": "mssql",
+    "cosmosdb1": {
+      "type": "cosmosdb",
       "connectionId": "ConnectionStrings",
       "dynamicId": null
     }

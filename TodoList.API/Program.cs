@@ -1,16 +1,25 @@
 using Microsoft.EntityFrameworkCore;
-using TodoList.API.DataAccess;
+using TodoList.API.DataAccess.Context;
+using TodoList.API.Repositories.Implementations;
+using TodoList.API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer("name=ConnectionStrings"));
+builder.Configuration.AddJsonFile("appsettings.json");
+builder.Configuration.AddUserSecrets<Program>();
+
+string? connectionString = builder.Configuration["AZURE_COSMOS_CONNECTIONSTRING"];
+string? databaseName = builder.Configuration["DatabaseName"];
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseCosmos(connectionString: connectionString!, databaseName: databaseName!)
+);
+
+
 builder.Services.AddScoped<ITodoItemsRepository, TodoItemsRepository>();
 
 builder.Services.AddCors(options =>
@@ -18,17 +27,21 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("https://todolist.runehille.com/")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
         });
 });
 
 var app = builder.Build();
 
-
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 

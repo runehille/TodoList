@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TodoList.API.DataAccess;
-using TodoList.API.DataModels;
+using TodoList.API.Models;
+using TodoList.API.Repositories.Interfaces;
 
 namespace TodoList.API.Controllers;
 
@@ -26,7 +26,7 @@ public class TodoItemsController : Controller
 
     // GET: TodoItems/Details/5
     [HttpGet("Details/{id}")]
-    public async Task<IActionResult> Details(Guid? id)
+    public async Task<IActionResult> Details(string? id)
     {
         if (id == null)
         {
@@ -45,20 +45,22 @@ public class TodoItemsController : Controller
 
     // POST: TodoItems/Create
     [HttpPost("Create")]
-    //[ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedTimestamp,LastModifiedTimestamp,LastModifiedBy")] TodoItemModel todoItemModel)
+    public async Task<IActionResult> Create([Bind("Title,Description")] TodoItem todoItem)
     {
         if (ModelState.IsValid)
         {
-            todoItemModel.Id = Guid.NewGuid();
-            await _todoItemsRepository.CreateNewTodoItemAsync(todoItemModel);
+            await _todoItemsRepository.CreateNewTodoItemAsync(todoItem);
+            return Ok(todoItem);
         }
-        return Ok(todoItemModel);
+        else
+        {
+            return NotFound();
+        }
     }
 
     // GET: TodoItems/Edit/5
     [HttpGet("Edit/{id}")]
-    public async Task<IActionResult> Edit(Guid? id)
+    public async Task<IActionResult> Edit(string? id)
     {
         if (id == null)
         {
@@ -66,6 +68,7 @@ public class TodoItemsController : Controller
         }
 
         var todoItemModel = await _todoItemsRepository.GetTodoItemByIdAsync(id);
+
         if (todoItemModel == null)
         {
             return NotFound();
@@ -75,8 +78,7 @@ public class TodoItemsController : Controller
 
     // POST: TodoItems/Edit/5
     [HttpPost("Edit/{id}")]
-    //[ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Description,CreatedTimestamp,LastModifiedTimestamp,LastModifiedBy")] TodoItemModel todoItemModel)
+    public async Task<IActionResult> Edit(string id, [Bind("Title,Description")] TodoItem todoItemModel)
     {
         if (id != todoItemModel.Id)
         {
@@ -97,7 +99,7 @@ public class TodoItemsController : Controller
 
     // GET: TodoItems/Delete/5
     [HttpGet("Delete/{id}")]
-    public async Task<IActionResult> Delete(Guid? id)
+    public async Task<IActionResult> Delete(string? id)
     {
         if (id == null)
         {
@@ -116,8 +118,7 @@ public class TodoItemsController : Controller
 
     // POST: TodoItems/Delete/5
     [HttpPost("Delete/{id}")]
-    //[ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    public async Task<IActionResult> DeleteConfirmed(string id)
     {
         await _todoItemsRepository.DeleteTodoItemAsync(id);
 
