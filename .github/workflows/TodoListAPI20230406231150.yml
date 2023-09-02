@@ -1,5 +1,6 @@
-name: Build and deploy .NET Core application to Web App TodoListAPI20230406231150
+name: TodoList.API
 on:
+  workflow_dispatch:
   push:
     branches:
     - master
