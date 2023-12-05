@@ -55,4 +55,5 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.TodoListAPI20230406231150_71D4 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        app-settings-json: '[{"name": "CosmosDbConnectionString", "value": "${{ secrets.COSMOS_DB_CONNECTION_STRING }}", "slotSetting": false}]'
+        app-settings-json: '[{"name": "CosmosDbConnectionString", "value": "${{ secrets.COSMOS_DB
+        _CONNECTION_STRING }}", "slotSetting": false}]'

@@ -58,24 +58,6 @@ public class TodoItemsController : Controller
         }
     }
 
-    // GET: TodoItems/Edit/5
-    [HttpGet("Edit/{id}")]
-    public async Task<IActionResult> Edit(string? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var todoItemModel = await _todoItemsRepository.GetTodoItemByIdAsync(id);
-
-        if (todoItemModel == null)
-        {
-            return NotFound();
-        }
-        return Ok(todoItemModel);
-    }
-
     // POST: TodoItems/Edit/5
     [HttpPost("Edit/{id}")]
     public async Task<IActionResult> Edit(string id, [Bind("Title,Description")] TodoItem todoItemModel)
@@ -89,7 +71,7 @@ public class TodoItemsController : Controller
         {
             todoItemModel.LastModifiedTimestamp = DateTime.UtcNow;
             await _todoItemsRepository.EditTodoItemAsync(todoItemModel);
-            return RedirectToAction(nameof(Index));
+            return Ok(todoItemModel);
         }
         else
         {
@@ -97,31 +79,21 @@ public class TodoItemsController : Controller
         }
     }
 
-    // GET: TodoItems/Delete/5
-    [HttpGet("Delete/{id}")]
-    public async Task<IActionResult> Delete(string? id)
+    // DELETE: TodoItems/Delete/5
+    [HttpDelete("Delete/{id}")]
+    public async Task<IActionResult> DeleteConfirmed(string id)
     {
         if (id == null)
         {
             return NotFound();
         }
-
-        var todoItemModel = await _todoItemsRepository.GetTodoItemByIdAsync(id);
-
-        if (todoItemModel == null)
+        else if (await _todoItemsRepository.GetTodoItemByIdAsync(id) == null)
         {
             return NotFound();
         }
 
-        return Ok(todoItemModel);
-    }
-
-    // POST: TodoItems/Delete/5
-    [HttpPost("Delete/{id}")]
-    public async Task<IActionResult> DeleteConfirmed(string id)
-    {
         await _todoItemsRepository.DeleteTodoItemAsync(id);
 
-        return RedirectToAction(nameof(Index));
+        return Ok();
     }
 }

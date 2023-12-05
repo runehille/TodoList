@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.API", "TodoList.API\TodoList.API.csproj", "{B284917F-4E54-4C6F-87B1-CFCAF3C0DEB4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Client", "TodoList.Client\TodoList.Client.csproj", "{2A04CECD-3D46-4492-9D37-B2B738414C5D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.API.Tests", "TodoList.API.Tests\TodoList.API.Tests.csproj", "{CADB7EED-A203-4DE4-B909-E2FC6B9176E3}"
 EndProject
 Global
