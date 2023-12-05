@@ -27,10 +27,10 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("https://todolist.runehille.com/")
+            policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials();
+            ;
         });
 });
 
