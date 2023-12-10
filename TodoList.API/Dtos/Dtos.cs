@@ -1,6 +1,6 @@
-﻿namespace TodoList.API.Models;
+namespace TodoList.API.Dtos;
 
-public class TodoItem
+public record TodoItemDto
 {
     public string? Id { get; set; }
     public string? ShortId { get; set; }

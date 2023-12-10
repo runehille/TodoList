@@ -19,7 +19,8 @@ public class TodoItemsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var result = await _todoItemsRepository.GetAllTodoItemsAsync();
+        var todoItems = await _todoItemsRepository.GetAllTodoItemsAsync();
+        var result = todoItems.Select(todoItem => todoItem.ToDto()).ToList();
 
         return Ok(result);
     }
@@ -34,13 +35,14 @@ public class TodoItemsController : Controller
         }
 
         var todoItem = await _todoItemsRepository.GetTodoItemByIdAsync(id);
+        var result = todoItem.ToDto();
 
         if (todoItem == null)
         {
             return NotFound();
         }
 
-        return Ok(todoItem);
+        return Ok(result);
     }
 
     // POST: TodoItems/Create
