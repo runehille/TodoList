@@ -9,7 +9,6 @@ public static class MappingExtensions
         return new TodoItemDto
         {
             Id = todoItem.Id,
-            ShortId = todoItem.ShortId,
             Title = todoItem.Title,
             Description = todoItem.Description,
             Status = todoItem.Status,
@@ -19,6 +18,23 @@ public static class MappingExtensions
             AssignedTo = todoItem.AssignedTo,
             CreatedTimestamp = todoItem.CreatedTimestamp,
             LastModifiedTimestamp = todoItem.LastModifiedTimestamp
+        };
+    }
+
+    public static TodoItem ToEntity(this TodoItemCreateDto todoItemCreateDto)
+    {
+        return new TodoItem
+        {
+            Id = Guid.NewGuid().ToString(),
+            Title = todoItemCreateDto.Title,
+            Description = todoItemCreateDto.Description,
+            Status = "To Do",
+            Priority = todoItemCreateDto.Priority,
+            CreatedBy = todoItemCreateDto.CreatedBy,
+            LastModifiedBy = todoItemCreateDto.CreatedBy,
+            AssignedTo = todoItemCreateDto.AssignedTo,
+            CreatedTimestamp = DateTime.UtcNow,
+            LastModifiedTimestamp = DateTime.UtcNow
         };
     }
 

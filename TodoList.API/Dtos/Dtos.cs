@@ -14,3 +14,12 @@ public record TodoItemDto
     public DateTime CreatedTimestamp { get; set; }
     public DateTime LastModifiedTimestamp { get; set; }
 }
+
+public record TodoItemCreateDto
+{
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public string? Priority { get; set; }
+    public string? CreatedBy { get; set; }
+    public string? AssignedTo { get; set; }
+}

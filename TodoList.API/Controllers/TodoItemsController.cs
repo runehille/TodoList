@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TodoList.API.Dtos;
 using TodoList.API.Models;
 using TodoList.API.Repositories.Interfaces;
 
@@ -47,12 +48,13 @@ public class TodoItemsController : Controller
 
     // POST: TodoItems/Create
     [HttpPost("Create")]
-    public async Task<IActionResult> Create([Bind("Title,Description")] TodoItem todoItem)
+    public async Task<IActionResult> Create([Bind("Title,Description")] TodoItemCreateDto todoItemCreateDto)
     {
         if (ModelState.IsValid)
         {
+            var todoItem = todoItemCreateDto.ToEntity();
             await _todoItemsRepository.CreateNewTodoItemAsync(todoItem);
-            return Ok(todoItem);
+            return Ok(todoItemCreateDto);
         }
         else
         {
