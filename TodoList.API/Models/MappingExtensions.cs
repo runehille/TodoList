@@ -38,4 +38,19 @@ public static class MappingExtensions
         };
     }
 
+    public static TodoItem ToEntity(this TodoItemEditDto todoItemEditDto)
+    {
+        return new TodoItem
+        {
+            Id = todoItemEditDto.Id,
+            Title = todoItemEditDto.Title,
+            Description = todoItemEditDto.Description,
+            Status = todoItemEditDto.Status,
+            Priority = todoItemEditDto.Priority,
+            LastModifiedBy = todoItemEditDto.LastModifiedBy,
+            AssignedTo = todoItemEditDto.AssignedTo,
+            LastModifiedTimestamp = DateTime.UtcNow
+        };
+    }
+
 }

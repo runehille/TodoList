@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TodoList.API.Controllers;
+using TodoList.API.Dtos;
 using TodoList.API.Models;
 using TodoList.API.Repositories.Interfaces;
 
@@ -79,13 +80,13 @@ namespace TodoList.API.Tests
             var controller = new TodoItemsController(mockRepo.Object);
             // Act
             var result = await controller.Create(
-                               new TodoItem()
+                               new TodoItemCreateDto()
                                {
-                                   Id = Guid.NewGuid().ToString(),
                                    Title = "Test Title",
                                    Description = "Test Description",
-                                   CreatedTimestamp = DateTime.Now,
-                                   LastModifiedTimestamp = DateTime.Now,
+                                   Priority = "Low",
+                                   CreatedBy = "Test User",
+                                   AssignedTo = "Test User",
                                }
                                           );
             // Assert

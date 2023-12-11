@@ -29,16 +29,8 @@ public class TodoItemsRepository : ITodoItemsRepository
     }
     public async Task<TodoItem> CreateNewTodoItemAsync(TodoItem todoItem)
     {
-        var item = new TodoItem
-        {
-            Id = Guid.NewGuid().ToString(),
-            Title = todoItem.Title,
-            Description = todoItem.Description,
-            CreatedTimestamp = DateTime.UtcNow,
-            LastModifiedTimestamp = DateTime.UtcNow
-        };
 
-        _dbContext.TodoItems.Add(item);
+        _dbContext.TodoItems.Add(todoItem);
 
         await _dbContext.SaveChangesAsync();
 
@@ -62,9 +54,5 @@ public class TodoItemsRepository : ITodoItemsRepository
         }
 
         await _dbContext.SaveChangesAsync();
-    }
-    private bool TodoItemModelExists(string id)
-    {
-        return (_dbContext.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }

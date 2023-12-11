@@ -36,20 +36,22 @@ public class TodoItemsController : Controller
         }
 
         var todoItem = await _todoItemsRepository.GetTodoItemByIdAsync(id);
-        var result = todoItem.ToDto();
 
         if (todoItem == null)
         {
             return NotFound();
         }
 
+        var result = todoItem.ToDto();
+
         return Ok(result);
     }
 
     // POST: TodoItems/Create
     [HttpPost("Create")]
-    public async Task<IActionResult> Create([Bind("Title,Description")] TodoItemCreateDto todoItemCreateDto)
+    public async Task<IActionResult> Create(TodoItemCreateDto todoItemCreateDto)
     {
+
         if (ModelState.IsValid)
         {
             var todoItem = todoItemCreateDto.ToEntity();
@@ -64,18 +66,12 @@ public class TodoItemsController : Controller
 
     // POST: TodoItems/Edit/5
     [HttpPost("Edit/{id}")]
-    public async Task<IActionResult> Edit(string id, [Bind("Title,Description")] TodoItem todoItemModel)
+    public async Task<IActionResult> Edit(string id, TodoItemEditDto todoItemEditDto)
     {
-        if (id != todoItemModel.Id)
-        {
-            return NotFound();
-        }
-
         if (ModelState.IsValid)
         {
-            todoItemModel.LastModifiedTimestamp = DateTime.UtcNow;
-            await _todoItemsRepository.EditTodoItemAsync(todoItemModel);
-            return Ok(todoItemModel);
+            await _todoItemsRepository.EditTodoItemAsync(todoItemEditDto.ToEntity());
+            return Ok();
         }
         else
         {
@@ -85,17 +81,12 @@ public class TodoItemsController : Controller
 
     // DELETE: TodoItems/Delete/5
     [HttpDelete("Delete/{id}")]
-    public async Task<IActionResult> DeleteConfirmed(string id)
+    public async Task<IActionResult> Delete(string id)
     {
         if (id == null)
         {
             return NotFound();
         }
-        else if (await _todoItemsRepository.GetTodoItemByIdAsync(id) == null)
-        {
-            return NotFound();
-        }
-
         await _todoItemsRepository.DeleteTodoItemAsync(id);
 
         return Ok();
