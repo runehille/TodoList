@@ -54,8 +54,7 @@ public class TodoItemsController : Controller
 
         if (ModelState.IsValid)
         {
-            var todoItem = todoItemCreateDto.ToEntity();
-            await _todoItemsRepository.CreateNewTodoItemAsync(todoItem);
+            await _todoItemsRepository.CreateNewTodoItemAsync(todoItemCreateDto.ToEntity());
             return Ok(todoItemCreateDto);
         }
         else
