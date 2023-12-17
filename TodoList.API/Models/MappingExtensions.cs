@@ -31,6 +31,7 @@ public static class MappingExtensions
             Description = todoItemCreateDto.Description,
             Status = "To Do",
             Priority = todoItemCreateDto.Priority,
+            Type = todoItemCreateDto.Type,
             CreatedBy = todoItemCreateDto.CreatedBy,
             LastModifiedBy = todoItemCreateDto.CreatedBy,
             AssignedTo = todoItemCreateDto.AssignedTo,
