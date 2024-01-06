@@ -12,11 +12,20 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 
+string connectionString;
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTION_STRING")));
+if (builder.Environment.IsDevelopment())
+{
+    connectionString = builder.Configuration.GetConnectionString("LOCAL_SQL_CONNECTION_STRING")!;
+}
+else
+{
+    connectionString = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTION_STRING")!;
+}
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<ITodoItemsRepository, TodoItemsRepository>();
+builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 
 builder.Services.AddCors(options =>
 {

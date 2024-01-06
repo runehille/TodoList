@@ -1,6 +1,6 @@
 ﻿namespace TodoList.API.Models;
 
-public class TodoItem
+public class Issue
 {
     public string? Id { get; set; }
     public string? Title { get; set; }

@@ -7,18 +7,18 @@ using TodoList.API.Repositories.Interfaces;
 
 namespace TodoList.API.Tests
 {
-    public class TodoItemsControllerTests
+    public class IssuesControllerTests
     {
         [Fact]
         public async Task Index_ReturnsOkResult()
         {
             // Arrange
-            var mockRepo = new Mock<ITodoItemsRepository>();
-            mockRepo.Setup(repo => repo.GetAllTodoItemsAsync())
+            var mockRepo = new Mock<IIssuesRepository>();
+            mockRepo.Setup(repo => repo.GetAllIssuesAsync())
                 .ReturnsAsync(
-                    new List<TodoItem>()
+                    new List<Issue>()
                 );
-            var controller = new TodoItemsController(mockRepo.Object);
+            var controller = new IssuesController(mockRepo.Object);
             // Act
             var result = await controller.Index();
             // Assert
@@ -29,8 +29,8 @@ namespace TodoList.API.Tests
         public async Task Details_ReturnsNotFoundResult_WhenIdIsNull()
         {
             // Arrange
-            var mockRepo = new Mock<ITodoItemsRepository>();
-            var controller = new TodoItemsController(mockRepo.Object);
+            var mockRepo = new Mock<IIssuesRepository>();
+            var controller = new IssuesController(mockRepo.Object);
             // Act
             var result = await controller.Details(null);
             // Assert
@@ -38,26 +38,26 @@ namespace TodoList.API.Tests
         }
 
         [Fact]
-        public async Task Details_ReturnsNotFoundResult_WhenTodoItemIsNull()
+        public async Task Details_ReturnsNotFoundResult_WhenIssueIsNull()
         {
             // Arrange
-            var mockRepo = new Mock<ITodoItemsRepository>();
-            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<string?>()))
+            var mockRepo = new Mock<IIssuesRepository>();
+            mockRepo.Setup(repo => repo.GetIssueByIdAsync(It.IsAny<string?>()))
                 .ReturnsAsync(() => null!);
-            var controller = new TodoItemsController(mockRepo.Object);
+            var controller = new IssuesController(mockRepo.Object);
             // Act
             var result = await controller.Details(Guid.NewGuid().ToString());
             // Assert
             Assert.IsType<NotFoundResult>(result);
         }
         [Fact]
-        public async Task Details_ReturnsOkResult_WhenTodoItemIsNotNull()
+        public async Task Details_ReturnsOkResult_WhenIssueIsNotNull()
         {
             // Arrange
-            var mockRepo = new Mock<ITodoItemsRepository>();
-            mockRepo.Setup(repo => repo.GetTodoItemByIdAsync(It.IsAny<string>()))
+            var mockRepo = new Mock<IIssuesRepository>();
+            mockRepo.Setup(repo => repo.GetIssueByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(
-                                   new TodoItem()
+                                   new Issue()
                                    {
                                        Id = Guid.NewGuid().ToString(),
                                        Title = "Test Title",
@@ -66,7 +66,7 @@ namespace TodoList.API.Tests
                                        LastModifiedTimestamp = DateTime.Now,
                                    }
                                                   );
-            var controller = new TodoItemsController(mockRepo.Object);
+            var controller = new IssuesController(mockRepo.Object);
             // Act
             var result = await controller.Details(Guid.NewGuid().ToString());
             // Assert
@@ -76,11 +76,11 @@ namespace TodoList.API.Tests
         public async Task Create_ReturnsOkResult_WhenModelStateIsValid()
         {
             // Arrange
-            var mockRepo = new Mock<ITodoItemsRepository>();
-            var controller = new TodoItemsController(mockRepo.Object);
+            var mockRepo = new Mock<IIssuesRepository>();
+            var controller = new IssuesController(mockRepo.Object);
             // Act
             var result = await controller.Create(
-                               new TodoItemCreateDto()
+                               new IssueCreateDto()
                                {
                                    Title = "Test Title",
                                    Description = "Test Description",

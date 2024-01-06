@@ -1,6 +1,6 @@
 namespace TodoList.API.Dtos;
 
-public record TodoItemDto
+public record IssueDto
 {
     public string? Id { get; set; }
     public string? ShortId { get; set; }
@@ -16,7 +16,7 @@ public record TodoItemDto
     public DateTime LastModifiedTimestamp { get; set; }
 }
 
-public record TodoItemCreateDto
+public record IssueCreateDto
 {
     public string? Title { get; set; }
     public string? Description { get; set; }
@@ -26,7 +26,7 @@ public record TodoItemCreateDto
     public string? AssignedTo { get; set; }
 }
 
-public record TodoItemEditDto
+public record IssueEditDto
 {
     public string? Id { get; set; }
     public string? Title { get; set; }
