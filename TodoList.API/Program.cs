@@ -12,12 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddUserSecrets<Program>();
 
-string? connectionString = builder.Configuration["AZURE_COSMOS_CONNECTIONSTRING"];
-string? databaseName = builder.Configuration["DatabaseName"];
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseCosmos(connectionString: connectionString!, databaseName: databaseName!)
-);
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTION_STRING")));
 
 
 builder.Services.AddScoped<ITodoItemsRepository, TodoItemsRepository>();
